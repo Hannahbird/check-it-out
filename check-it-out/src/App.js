@@ -57,12 +57,14 @@ function App() {
                     />
                     <div style={{ padding: '16px' }}>
                       <Typography variant="h6">{item.name}</Typography>
-                      <Typography variant="body2" style={{ marginBottom: '8px' }}>
-                        Description of {item.name}.
-                      </Typography>
-                      <Button variant="contained" color="primary">
-                        Add to Cart
-                      </Button>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography variant="body2" color="textSecondary">
+                          ${item.price}
+                        </Typography>
+                        <Button variant="contained" color="primary">
+                          Add to Cart
+                        </Button>
+                      </div>
                     </div>
                   </Card>
                 </Grid>
