@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 3310:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: Pass@123
+    env_file: .env
+    networks:
+      - web
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - web
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/app/src
+    networks:
+      - web
+    extra_hosts:
+      - "db:172.23.0.2"
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    depends_on:
+      - db
+    ports:
+      - '5000:5000'
+    env_file: .env
+    volumes:
+      - ./server:/app/server
+    command: npm run server
+    networks:
+      - web
+
+networks:
+  web:

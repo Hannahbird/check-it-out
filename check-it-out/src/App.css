@@ -1,0 +1,95 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.container {
+  min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  position: relative;
+}
+
+.category-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: #282c34;
+  color: white;
+  padding: 10px;
+}
+
+.App-header:hover .category-menu {
+  display: block;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Add styles for the product carousel */
+.featured-products {
+  margin: 20px;
+  text-align: center;
+}
+
+.product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+}
+
+.product img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Add your own media query or adjust the styles as needed */
+@media (max-width: 768px) {
+  .featured-products {
+    /* Adjust styles for smaller screens */
+    margin: 10px;
+  }
+
+  .product {
+    /* Adjust styles for smaller screens */
+    margin: 5px;
+  }
+}
