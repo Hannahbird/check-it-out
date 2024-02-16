@@ -5,17 +5,42 @@ import { Container, AppBar, Toolbar, Typography, Button, Grid, Card, CardMedia, 
 import './App.css';
 import Footer from './components/footer';
 import Header from './components/header';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import axios from 'axios';
 
 function App() {
   const [carouselItems, setCarouselItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const addToCart = async (itemId) => {
+    try {
+      const response = await fetch('http://localhost:5000/add-to-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ itemId, quantity: 1 }),
+      });
+  
+      if (response.ok) {
+        const updatedCartItem = await response.json();
+        console.log('Item added to the cart successfully:', updatedCartItem);
+        // Update the UI or state with the updated cart item if needed
+      } else {
+        console.error('Failed to add item to the cart:', response.statusText);
+        // Handle error accordingly
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+      // Handle error accordingly
+    }
+  };
+
   useEffect(() => {
     async function fetchStoreItems() {
       try {
-        const response = await fetch('http://localhost:5000/store_items');
-        const data = await response.json();
-        setCarouselItems(data);
+        const response = await axios.get('http://localhost:5000/store_items');
+        setCarouselItems(response.data);
       } catch (error) {
         console.error('Error fetching store items:', error);
       } finally {
@@ -61,7 +86,12 @@ function App() {
                         <Typography variant="body2" color="textSecondary">
                           ${item.price}
                         </Typography>
-                        <Button variant="contained" color="primary">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          startIcon={<ShoppingCartIcon />}
+                          onClick={() => addToCart(item.id)}
+                        >
                           Add to Cart
                         </Button>
                       </div>

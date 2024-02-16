@@ -3,12 +3,14 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import AllItems from './components/all-items';
+import Cart from './components/cart';
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/all-items" element={<AllItems />} />
+      <Route path="/cart" element={<Cart />} />
       {/* Add more routes as needed */}
     </Routes>
   );

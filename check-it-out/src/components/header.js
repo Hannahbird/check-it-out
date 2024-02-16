@@ -4,20 +4,34 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link, useLocation } from 'react-router-dom';
 
-const Header = ({ title, buttonText, buttonAction }) => {
+const Header = ({ title, buttonText, buttonAction, isCartEmpty }) => {
+  const location = useLocation();
+  const isOnCartPage = location.pathname === '/cart';
+
   return (
     <AppBar position="static" color="primary">
       <Container maxWidth="md">
-        <Toolbar>
-          <Typography style={{ display: 'flex', justifyContent: 'center' }} variant="h6" color="inherit">
+        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" color="inherit">
             {title}
           </Typography>
-          {buttonText && (
-            <Button variant="contained" color="info" onClick={buttonAction} style={{ marginLeft:'auto' }}>
-              {buttonText}
-            </Button>
-          )}
+          <div>
+            {buttonText && (
+              <Button variant="contained" color="info" onClick={buttonAction}>
+                {buttonText}
+              </Button>
+            )}
+            {isCartEmpty || isOnCartPage ? null : (
+              <Link to="/cart" style={{ textDecoration: 'none' }}>
+                <Button variant="contained" color="secondary" style={{ marginLeft: '8px' }}>
+                  <ShoppingCartIcon />
+                </Button>
+              </Link>
+            )}
+          </div>
         </Toolbar>
       </Container>
     </AppBar>
