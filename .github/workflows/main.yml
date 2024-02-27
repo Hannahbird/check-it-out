@@ -38,6 +38,14 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/hannahbrownson/check-it-out-server:latest .
+          exit_code=$?
+          if [ $exit_code -eq 0 ]; then
+            echo "Docker build succeeded. Proceeding to push."
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker push docker.io/hannahbrownson/check-it-out-server:latest
+          else
+            echo "Docker build failed with exit code $exit_code. Skipping push."
+          fi
 
-          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          docker push docker.io/hannahbrownson/check-it-out-server:latest
+      - name: List Docker Images
+        run: docker images
