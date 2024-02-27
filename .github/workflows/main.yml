@@ -19,6 +19,9 @@ jobs:
       - name: Display BuildKit version
         run: docker buildx version
 
+      - name: Pull Image
+        run: docker pull docker.io/hannahbrownson/check-it-out-app:latest
+        
       - name: Build App Docker Image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -26,17 +29,9 @@ jobs:
         run: |
           docker buildx create --use --name mybuilder --driver docker-container
           docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/hannahbrownson/check-it-out-app:latest .
-          exit_code=$?
-          if [ $exit_code -eq 0 ]; then
-            echo "Docker build succeeded. Proceeding to push."
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            docker push docker.io/hannahbrownson/check-it-out-app:latest
-          else
-            echo "Docker build failed with exit code $exit_code. Skipping push."
-          fi
-
-      - name: Pull Image
-        run: docker pull docker.io/hannahbrownson/check-it-out-app:latest
+          
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          docker push docker.io/hannahbrownson/check-it-out-app:latest
 
       - name: Build and Push Server Docker Image
         env:
