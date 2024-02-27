@@ -13,32 +13,28 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker
-        uses: actions/setup-docker@v2
-        with:
-          dockerfile: Dockerfile
-          context: .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build and Push App Docker Image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker build -t hannahbrownson/check-it-out-app:latest .
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 -t hannahbrownson/check-it-out-app:latest .
+
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push hannahbrownson/check-it-out-app:latest
-
-      - name: Set up Docker for Server
-        uses: actions/setup-docker@v2
-        with:
-          dockerfile: Dockerfile.server
-          context: .
 
       - name: Build and Push Server Docker Image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker build -t hannahbrownson/check-it-out-server:latest .
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 -t hannahbrownson/check-it-out-server:latest .
+
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push hannahbrownson/check-it-out-server:latest
+
