@@ -21,7 +21,6 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker buildx create --use --name mybuilder --driver docker-container
           docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/hannahbrownson/check-it-out-app:latest .
 
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -32,9 +31,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker buildx create --use --name mybuilder --driver docker-container
           docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/hannahbrownson/check-it-out-server:latest .
 
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push docker.io/hannahbrownson/check-it-out-server:latest
-
