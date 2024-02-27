@@ -17,18 +17,20 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build App Docker Image
-        run: |
-          docker buildx create --use --name mybuilder --driver docker-container
-          docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/hannahbrownson/check-it-out-app:latest .
-
-      - name: Push App Docker Image
-        if: success()  # This step will only run if the previous steps were successful
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          docker push docker.io/hannahbrownson/check-it-out-app:latest
+          docker buildx create --use --name mybuilder --driver docker-container
+          docker buildx build --platform linux/amd64,linux/arm64 -t docker.io/hannahbrownson/check-it-out-app:latest .
+          exit_code=$?
+          if [ $exit_code -eq 0 ]; then
+            echo "Docker build succeeded. Proceeding to push."
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker push docker.io/hannahbrownson/check-it-out-app:latest
+          else
+            echo "Docker build failed with exit code $exit_code. Skipping push."
+          fi
 
       - name: Build and Push Server Docker Image
         env:
