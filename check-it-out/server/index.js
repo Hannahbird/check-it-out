@@ -1,8 +1,7 @@
 const express = require('express');
 const pino = require('pino');
 const expressPino = require('pino-http');
-const logger = pino({ prettyPrint: true });
-const expressLogger = expressPino({ logger });
+const logger = pino(); 
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -15,7 +14,7 @@ const bcrypt = require('bcrypt');
 const axios = require('axios'); 
 
 const app = express();
-app.use(expressLogger);
+app.use(expressPino({ logger }));
 const port = 5000;
 
 app.use(cors());

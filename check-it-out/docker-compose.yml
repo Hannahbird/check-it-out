@@ -14,6 +14,7 @@ services:
     env_file: .env
     networks:
       - web
+      - loki
 
   adminer:
     image: adminer
@@ -28,7 +29,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
+      - '3002:3000'
     volumes:
       - ./src:/app/src
     networks:
@@ -37,6 +38,7 @@ services:
       - "db:172.23.0.2"
 
   server:
+    container_name: store-api
     build:
       context: .
       dockerfile: Dockerfile.server
@@ -48,8 +50,17 @@ services:
     volumes:
       - ./server:/app/server
     command: npm run server
+    labels:
+      - "logging=promtail"
+      - "logging_jobname=applogs"
+ 
     networks:
       - web
+      - loki
 
 networks:
   web:
+    driver: bridge
+  loki:
+    external: true 
+

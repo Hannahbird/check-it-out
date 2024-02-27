@@ -1,0 +1,87 @@
+.
+├── check-it-out
+│   ├── config
+│   │   └── config.json
+│   ├── docker-compose.yml
+│   ├── docker-entrypoint.sh
+│   ├── Dockerfile
+│   ├── Dockerfile.server
+│   ├── init.sql
+│   ├── logging-config
+│   │   ├── loki-config.yml
+│   │   └── promtail-config.yml
+│   ├── migrations
+│   ├── models
+│   │   └── index.js
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   │   ├── favicon.ico
+│   │   ├── images
+│   │   │   └── assets
+│   │   │       ├── 1989.png
+│   │   │       ├── evermore.png
+│   │   │       ├── fearless.png
+│   │   │       ├── folklore.png
+│   │   │       ├── hammer.png
+│   │   │       ├── lover.png
+│   │   │       ├── midnights.png
+│   │   │       ├── nails.png
+│   │   │       ├── red.png
+│   │   │       ├── reputation.png
+│   │   │       ├── speak-now.png
+│   │   │       └── wrench.png
+│   │   ├── index.html
+│   │   ├── logo192.png
+│   │   ├── logo512.png
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   ├── README.md
+│   ├── seeders
+│   ├── server
+│   │   ├── authenticateToken.js
+│   │   ├── index.js
+│   │   ├── models
+│   │   │   ├── cart.js
+│   │   │   ├── db.js
+│   │   │   ├── storeItemModel.js
+│   │   │   └── user.js
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   └── public
+│   │       └── index.html
+│   └── src
+│       ├── App.css
+│       ├── App.js
+│       ├── App.test.js
+│       ├── components
+│       │   ├── all-items.js
+│       │   ├── cartItem.js
+│       │   ├── cart.js
+│       │   ├── footer.js
+│       │   ├── header.js
+│       │   ├── login.js
+│       │   └── protectedRoute.js
+│       ├── images
+│       │   └── assets
+│       │       ├── 1989.png
+│       │       ├── evermore.png
+│       │       ├── fearless.png
+│       │       ├── folklore.png
+│       │       ├── hammer.png
+│       │       ├── lover.png
+│       │       ├── midnights.png
+│       │       ├── nails.png
+│       │       ├── red.png
+│       │       ├── reputation.png
+│       │       ├── speak-now.png
+│       │       └── wrench.png
+│       ├── index.css
+│       ├── index.js
+│       ├── logo.svg
+│       ├── reportWebVitals.js
+│       ├── Routes.js
+│       └── setupTests.js
+└── directory_tree.txt
+
+17 directories, 68 files

@@ -87,8 +87,8 @@ function Cart() {
             marginTop: '16px',
             marginRight: '8px',
             padding: '8px 16px',
-            background: '#4caf50', // Change the background color as needed
-            color: '#fff', // Change the text color as needed
+            background: '#4caf50', 
+            color: '#fff', 
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer',
@@ -101,8 +101,8 @@ function Cart() {
         style={{
           marginTop: '16px',
           padding: '8px 16px',
-          background: '#f50057', // Change the background color as needed
-          color: '#fff', // Change the text color as needed
+          background: '#f50057', 
+          color: '#fff', 
           border: 'none',
           borderRadius: '4px',
           cursor: 'pointer',
