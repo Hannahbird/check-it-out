@@ -35,6 +35,9 @@ jobs:
             echo "Docker build failed with exit code $exit_code. Skipping push."
           fi
 
+      - name: Pull Image
+        run: docker pull docker.io/hannahbrownson/check-it-out-app:latest
+
       - name: Build and Push Server Docker Image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
