@@ -34,6 +34,8 @@ services:
       - ./src:/app/src
     networks:
       - web
+    depends_on:
+      - db
     extra_hosts:
       - "db:172.23.0.2"
 
@@ -53,7 +55,6 @@ services:
     labels:
       - "logging=promtail"
       - "logging_jobname=applogs"
- 
     networks:
       - web
       - loki
@@ -62,5 +63,4 @@ networks:
   web:
     driver: bridge
   loki:
-    external: true 
-
+    external: true
