@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
-import { Container, AppBar, Toolbar, Typography, Button, Grid, Card, CardMedia, Divider } from '@mui/material';
+import { Container, Typography, Button, Grid, Card, CardMedia } from '@mui/material';
 import './App.css';
 import Footer from './components/footer';
 import Header from './components/header';
@@ -25,14 +24,11 @@ function App() {
       if (response.ok) {
         const updatedCartItem = await response.json();
         console.log('Item added to the cart successfully:', updatedCartItem);
-        // Update the UI or state with the updated cart item if needed
       } else {
         console.error('Failed to add item to the cart:', response.statusText);
-        // Handle error accordingly
       }
     } catch (error) {
       console.error('Error adding item to cart:', error);
-      // Handle error accordingly
     }
   };
 
@@ -76,7 +72,7 @@ function App() {
                   <Card>
                     <CardMedia
                       component="img"
-                      height="100%" // Set a fixed height
+                      height="100%" 
                       image={item.image_path}
                       alt={item.name}
                     />

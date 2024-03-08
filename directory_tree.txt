@@ -1,7 +1,8 @@
-.
 ├── check-it-out
 │   ├── config
 │   │   └── config.json
+|   ├── deployment
+│   │   └── deployment.yaml
 │   ├── docker-compose.yml
 │   ├── docker-entrypoint.sh
 │   ├── Dockerfile

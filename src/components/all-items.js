@@ -39,14 +39,11 @@ function AllItems() {
       if (response.ok) {
         const updatedCartItem = await response.json();
         console.log('Item added to the cart successfully:', updatedCartItem);
-        // Update the UI or state with the updated cart item if needed
       } else {
         console.error('Failed to add item to the cart:', response.statusText);
-        // Handle error accordingly
       }
     } catch (error) {
       console.error('Error adding item to cart:', error);
-      // Handle error accordingly
     }
   };
 
@@ -94,8 +91,6 @@ function AllItems() {
           </Container>
         )}
       </main>
-
-      {/* Add a footer if needed */}
       <footer>
         <Footer />
       </footer>

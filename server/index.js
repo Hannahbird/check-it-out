@@ -9,7 +9,7 @@ const StoreItem = require('./models/storeItemModel');
 const sequelize = require('./models/db');
 const User = require('./models/user');
 const Cart = require('./models/cart');
-const authenticateToken = require('./authenticateToken');
+// const authenticateToken = require('./authenticateToken');
 const bcrypt = require('bcrypt');
 const axios = require('axios'); 
 
@@ -28,19 +28,13 @@ sequelize.sync()
     console.error('Error synchronizing database:', error);
   });
 
-// Sample database
-// const users = [
-//   { id: 1, username: 'user1', password: '$2b$10$GpRiL8.8b9Jx1RfLXYQ5/OMFiblYLd9Is7YOPiw3psHzO.yvU9HKu' } // hashed password: 'password'
-// ];
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Hash the password before storing it
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Save the user with the hashed password
     const newUser = await User.create({
       username,
       password: hashedPassword,
@@ -65,25 +59,11 @@ app.post('/login', (req, res) => {
   }
 });
 
-// // Sample route for product details
-// app.get('/products', authenticateToken, (req, res) => {
-//   // Fetch and return product details from the database
-//   const products = [
-//     { id: 1, name: 'Product 1', price: 10, image: 'product1.jpg' },
-//     { id: 2, name: 'Product 2', price: 20, image: 'product2.jpg' }
-//     // Add more products as needed
-//   ];
-
-//   res.json(products);
-// });
-
 app.get('/store_items', async (req, res) => {
   try {
     const storeItems = await StoreItem.findAll();
     const detailedItems = await Promise.all(storeItems.map(async (item) => {
       const { id, name, price, image_path } = item;
-      // Fetch additional details for each item using Axios
-      // Adjust this part based on your actual data structure and relationships
       const additionalDetails = await fetchAdditionalDetailsWithAxios(id);
       return { id, name, price, image_path, ...additionalDetails };
     }));
@@ -96,7 +76,6 @@ app.get('/store_items', async (req, res) => {
 
 async function fetchAdditionalDetailsWithAxios(itemId) {
   try {
-    // Replace this with your actual logic to fetch additional details using Axios
     const response = await axios.get(`http://localhost:5000/store_items/${itemId}`);
     return response.data;
   } catch (error) {
@@ -123,36 +102,32 @@ app.get('/store_items/:id', async (req, res) => {
 app.post('/add-to-cart', async (req, res) => {
   const { itemId, quantity } = req.body;
   const userAgent = req.get('User-Agent');
-  const clientIP = req.ip; // This may vary based on your server setup
+  const clientIP = req.ip; 
 
   try {
-    // Create or update cart items based on user-agent or IP
     const [cartItem, created] = await Cart.findOrCreate({
       where: { client_identifier: userAgent || clientIP, item_id: itemId },
       defaults: { quantity },
     });
 
     if (!created) {
-      // Item already exists in the cart, update quantity
       await Cart.update({ quantity }, { where: { client_identifier: userAgent || clientIP, item_id: itemId } });
     }
 
-    // Fetch the updated cart item after the operation
     const updatedCartItem = await Cart.findOne({
       where: { client_identifier: userAgent || clientIP, item_id: itemId },
       include: [{ model: StoreItem }],
     });
 
-    res.status(200).json(updatedCartItem); // Send the updated cart item in the response
+    res.status(200).json(updatedCartItem); 
   } catch (error) {
     console.error('Error adding item to cart:', error);
-    res.status(500).json({ error: 'Internal Server Error' }); // Provide a more informative error response
+    res.status(500).json({ error: 'Internal Server Error' }); 
   }
 });
 
-// app.get('/cart', ...) endpoint
 app.get('/cart', async (req, res) => {
-  const clientIdentifier = req.get('User-Agent') || req.ip; // Get client identifier (user-agent or IP)
+  const clientIdentifier = req.get('User-Agent') || req.ip;
 
   try {
     const cartItems = await Cart.findAll({
@@ -163,18 +138,17 @@ app.get('/cart', async (req, res) => {
     res.json(cartItems);
   } catch (error) {
     console.error('Error fetching cart items:', error);
-    res.status(500).json({ error: 'Internal Server Error' }); // Provide a more informative error response
+    res.status(500).json({ error: 'Internal Server Error' }); 
   }
 });
 
 app.delete('/clear-cart', async (req, res) => {
-  const clientIdentifier = req.get('User-Agent') || req.ip; // Get client identifier (user-agent or IP)
+  const clientIdentifier = req.get('User-Agent') || req.ip;
 
   try {
-    // Delete all cart items associated with the client identifier
     await Cart.destroy({ where: { client_identifier: clientIdentifier } });
 
-    res.status(204).send(); // Send a success response
+    res.status(204).send();
   } catch (error) {
     console.error('Error clearing cart:', error);
     res.status(500).send('Internal Server Error');
@@ -185,7 +159,6 @@ app.delete('/remove-from-cart/:itemId', async (req, res) => {
   const itemId = req.params.itemId;
 
   try {
-    // Find the cart item by itemId and delete it
     await Cart.destroy({ where: { id: itemId } });
 
     res.status(200).send('Item removed from cart');
@@ -200,7 +173,6 @@ app.put('/update-cart-item/:itemId', async (req, res) => {
   const newQuantity = req.body.quantity;
 
   try {
-    // Find the cart item by itemId and update the quantity
     const updatedCartItem = await Cart.update(
       { quantity: newQuantity },
       { where: { id: itemId } }
@@ -214,7 +186,7 @@ app.put('/update-cart-item/:itemId', async (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  logger.error(err); // Log errors
+  logger.error(err); 
   res.status(500).send('Internal Server Error');
 });
 

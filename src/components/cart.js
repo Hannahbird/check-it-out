@@ -15,7 +15,7 @@ function Cart() {
     const fetchCartItems = async () => {
       try {
         const response = await axios.get('http://localhost:5000/cart');
-        console.log('Response from /cart:', response.data); // Log the response
+        console.log('Response from /cart:', response.data); 
         setCartItems(response.data);
       } catch (error) {
         console.error('Error fetching cart items:', error);
@@ -28,14 +28,13 @@ function Cart() {
   }, [cartUpdateStatus]);
 
   const handleUpdateCart = async () => {
-    // You can add any additional logic before updating the cart
     setCartUpdateStatus((prevStatus) => (prevStatus === 'idle' ? 'updating' : 'idle'));
   };
 
   const handleEmptyCart = async () => {
     try {
       await axios.delete('http://localhost:5000/clear-cart');
-      setCartItems([]); // Clear the cart locally
+      setCartItems([]); 
     } catch (error) {
       console.error('Error clearing cart:', error);
     }
@@ -45,7 +44,6 @@ function Cart() {
     return <p>Loading cart...</p>;
   }
 
-  // Ensure that cartItems is an array before using map
   if (!Array.isArray(cartItems)) {
     console.error('cartItems is not an array:', cartItems);
     return <p>Error loading cart items</p>;

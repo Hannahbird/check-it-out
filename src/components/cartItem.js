@@ -16,7 +16,6 @@ const CartItem = ({ item, updateCart, removeFromCart }) => {
       });
   
       if (response.status === 200) {
-        // Update the local state with the new quantity
         setQuantity(newQuantity);
       } else {
         console.error('Failed to update quantity:', response.statusText);
@@ -29,11 +28,9 @@ const CartItem = ({ item, updateCart, removeFromCart }) => {
   const handleRemoveItem = async () => {
     try {
       await axios.delete(`http://localhost:5000/remove-from-cart/${item.id}`);
-      // Remove the item from the local cart state or trigger a fetch to update the entire cart
       removeFromCart(item.id);
     } catch (error) {
       console.error('Error removing item:', error);
-      // Handle error accordingly
     }
   };
 
