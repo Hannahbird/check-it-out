@@ -49,7 +49,7 @@ function AllItems() {
 
   return (
     <div>
-      <Header title="All Items" buttonText="Back to Home" buttonAction={() => navigate('/')} />
+      <Header title="Discography" buttonText="Home" buttonAction={() => navigate('/')} />
 
       <main>
         {loading ? (
