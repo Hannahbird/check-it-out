@@ -43,7 +43,7 @@ services:
     container_name: store-api
     build:
       context: .
-      dockerfile: Dockerfile.server
+      dockerfile: Dockerfile
     depends_on:
       - db
     ports:
