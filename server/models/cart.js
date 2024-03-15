@@ -21,11 +21,11 @@ const Cart = sequelize.define('Cart', {
     allowNull: false,
   },
   client_identifier: {
-    type: DataTypes.STRING, // Assuming you're storing the user-agent or IP as a string
+    type: DataTypes.STRING, 
     allowNull: false,
   },
 }, {
-  tableName: 'cart', // Make sure the table name matches your actual table name in the database
+  tableName: 'cart',
 });
 
 Cart.belongsTo(StoreItem, { foreignKey: 'item_id' });
