@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from './header';
 import Footer from './footer';
 import CartItem from './cartItem';
+import { Grid, Container, Button, Typography, Divider } from '@mui/material';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -15,7 +16,7 @@ function Cart() {
     const fetchCartItems = async () => {
       try {
         const response = await axios.get('http://localhost:5000/cart');
-        console.log('Response from /cart:', response.data); 
+        console.log('Response from /cart:', response.data);
         setCartItems(response.data);
       } catch (error) {
         console.error('Error fetching cart items:', error);
@@ -34,7 +35,7 @@ function Cart() {
   const handleEmptyCart = async () => {
     try {
       await axios.delete('http://localhost:5000/clear-cart');
-      setCartItems([]); 
+      setCartItems([]);
     } catch (error) {
       console.error('Error clearing cart:', error);
     }
@@ -55,60 +56,37 @@ function Cart() {
 
   return (
     <div>
-      <Header title="Your Cart" buttonText="Back to Home" buttonAction={() => navigate('/')} />
+      <Header title="Your Cart" buttonText="Continue Shopping" buttonAction={() => navigate('/all-items')} />
+      <Container>
+        <Grid container spacing={3}>
+          {cartItems.map((item) => (
+            <Grid item key={item.id} xs={12} sm={6} md={4}>
+              <CartItem item={item} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <Container maxWidth="md" style={{ marginTop: '16px', padding: '16px', border: '1px solid #ccc', borderRadius: '8px' }}>
+        <Typography variant="h5" gutterBottom>Order Summary</Typography>
         {cartItems.map((item) => (
-          <CartItem key={item.id} item={item} />
+          <Grid container key={item.id} justifyContent="space-between" style={{ marginBottom: '8px' }}>
+            <Typography>{item.store_item.name}</Typography>
+            <Typography>${(item.store_item.price * item.quantity).toFixed(2)}</Typography>
+          </Grid>
         ))}
-      </div>
+        <Divider style={{ margin: '8px 0' }} />
+        <Grid container justifyContent="space-between" fontWeight="bold">
+          <Typography>Total Cost:</Typography>
+          <Typography>${calculateTotalCost().toFixed(2)}</Typography>
+        </Grid>
+      </Container>
 
-      <div style={{ marginTop: '16px', padding: '16px', border: '1px solid #ccc', borderRadius: '8px', width: '60%', margin: '0 auto' }}>
-        <h3 style={{ marginBottom: '16px' }}>Order Summary</h3>
-        {cartItems.map((item) => (
-          <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <span>{item.store_item.name}</span>
-            <span>${(item.store_item.price * item.quantity).toFixed(2)}</span>
-          </div>
-        ))}
-        <hr style={{ margin: '8px 0' }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-          <span>Total Cost:</span>
-          <span>${calculateTotalCost().toFixed(2)}</span>
-        </div>
-      </div>
-
-      <div style={{ textAlign: 'center', marginTop: '16px', padding: '8px 16px' }}>
-      <button
-          onClick={handleUpdateCart}
-          style={{
-            marginTop: '16px',
-            marginRight: '8px',
-            padding: '8px 16px',
-            background: '#4caf50', 
-            color: '#fff', 
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          Update Cart
-        </button>
-      <button
-        onClick={handleEmptyCart}
-        style={{
-          marginTop: '16px',
-          padding: '8px 16px',
-          background: '#f50057', 
-          color: '#fff', 
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Empty Cart
-      </button>
-      </div>
+      <Container maxWidth="sm" style={{ textAlign: 'center', marginTop: '16px' }}>
+        <Button onClick={handleUpdateCart} variant="contained" style={{ marginRight: '8px', background: '#4caf50', color: '#fff', borderRadius: '4px' }}>Update Cart</Button>
+        <Button onClick={handleEmptyCart} variant="contained" style={{ background: '#f50057', color: '#fff', borderRadius: '4px' }}>Empty Cart</Button>
+      </Container>
+      <Divider style={{ margin: '8px 0' }} />
 
       <Footer />
     </div>
