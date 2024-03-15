@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, Grid, Card, CardMedia } from '@mui/material';
 import './App.css';
 import Footer from './components/footer';
@@ -10,6 +10,7 @@ import axios from 'axios';
 function App() {
   const [carouselItems, setCarouselItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const addToCart = async (itemId) => {
     try {
@@ -55,7 +56,7 @@ function App() {
 
   return (
     <div maxWidth="md">
-      <Header title="Our Store" buttonText="Login" buttonAction={() => console.log('Button clicked')} />
+      <Header title="Our Store" buttonText="Login" buttonAction={() => navigate('/test')} />
       <Typography className="App-header" variant="h4" component="div" gutterBottom>
           Welcome to Our Store
         <Typography variant="body1">Discover amazing products and great deals!</Typography>
