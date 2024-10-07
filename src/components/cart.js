@@ -55,9 +55,9 @@ function Cart() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header title="Your Cart" buttonText="Continue Shopping" buttonAction={() => navigate('/all-items')} />
-      <Container>
+      <Container style={{ flex: '1' }}>
         <Grid container spacing={3}>
           {cartItems.map((item) => (
             <Grid item key={item.id} xs={12} sm={6} md={4}>
@@ -88,7 +88,7 @@ function Cart() {
       </Container>
       <Divider style={{ margin: '8px 0' }} />
 
-      <Footer />
+      <Footer style={{ flexShrink: 0 }} />
     </div>
   );
 }

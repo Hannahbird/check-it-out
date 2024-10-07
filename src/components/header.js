@@ -89,7 +89,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Header({ title, buttonText, buttonAction, isCartEmpty }) {
+export default function Header({ title, buttonText, buttonAction, isCartEmpty, backgroundImage }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -108,7 +108,7 @@ export default function Header({ title, buttonText, buttonAction, isCartEmpty })
     return (
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <NavBar position="fixed" open={open}>
+        <NavBar position="fixed" open={open} style={{backgroundColor: "grey"}}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -161,29 +161,38 @@ export default function Header({ title, buttonText, buttonAction, isCartEmpty })
     );
   } else {
     return (
-      <AppBar position="static" color="primary">
-      <Container maxWidth="md">
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h6" color="inherit">
-            {title}
-          </Typography>
-          <div>
-            {buttonText && (
-              <Button variant="contained" color="info" onClick={buttonAction}>
-                {buttonText}
-              </Button>
-            )}
-            {isCartEmpty || isOnCartPage ? null : (
-              <Link to="/cart" style={{ textDecoration: 'none' }}>
-                <Button variant="contained" color="secondary" style={{ marginLeft: '8px' }}>
-                  <ShoppingCartIcon />
+      <AppBar
+        position="sticky"
+        color="primary"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed"
+        }}
+      >
+        <Container maxWidth="md">
+          <Toolbar style={{ display: 'flex', justifyContent: 'space-between'}}>
+            <Typography variant="h6" color="black">
+              {title}
+            </Typography>
+            <div>
+              {buttonText && (
+                <Button variant="contained" color="inherit" onClick={buttonAction} style={{color: "black"}}>
+                  {buttonText}
                 </Button>
-              </Link>
-            )}
-          </div>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              )}
+              {isCartEmpty || isOnCartPage ? null : (
+                <Link to="/cart" style={{ textDecoration: 'none' }}>
+                  <Button variant="contained" color="inherit" style={{ marginLeft: '8px' }}>
+                    <ShoppingCartIcon />
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </Toolbar>
+        </Container>
+      </AppBar>
     );
   }
 }

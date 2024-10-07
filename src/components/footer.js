@@ -14,7 +14,7 @@ const styles = {
 
 function Footer() {
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" style={{backgroundColor: "grey"}}>
           <Container maxWidth="md">
             <Toolbar>
               <Typography variant="h6" color="inherit" style={styles.centeredText}>

@@ -6,6 +6,7 @@ import Footer from './components/footer';
 import Header from './components/header';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios';
+import ttpd from './images/assets/ttpd-banner.png';
 
 function App() {
   const [carouselItems, setCarouselItems] = useState([]);
@@ -56,11 +57,13 @@ function App() {
 
   return (
     <div maxWidth="md">
-      <Header title="Our Store" buttonText="Login" buttonAction={() => navigate('/test')} />
-      <Typography className="App-header" variant="h4" component="div" gutterBottom>
-          Welcome to Our Store
-        <Typography variant="body1">Discover amazing products and great deals!</Typography>
-        </Typography>
+      <Header title="Music Emporium" buttonText="Login" buttonAction={() => navigate('/test')} backgroundImage={ttpd} />
+      <Typography className="App-header" variant="h4" component="div" gutterBottom style={{ overflow: "hidden", maxHeight: "200px", position: "relative" }}>
+        <div style={{ position: "absolute", top: "60%", left: "60%", transform: "translate(-60%, -60%)", width: "100%", height: "auto", maxWidth: "100%" }}>
+          <img src={ttpd} style={{ width: "100%", height: "auto", objectFit: "cover" }} alt="Hero Image" />
+        </div>
+      </Typography>
+
       <Container>
         <main>
           <section className="featured-products">
