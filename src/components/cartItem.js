@@ -4,6 +4,7 @@ import { Card, CardActions, CardMedia, Typography, Button } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import axios from 'axios';
+import { getOptimizedCardUrl } from '../utils/cloudinaryUtils';
 
 const CartItem = ({ item, updateCart, removeFromCart }) => {
   const [quantity, setQuantity] = useState(item.quantity);
@@ -37,13 +38,14 @@ const CartItem = ({ item, updateCart, removeFromCart }) => {
     <Card style={{ maxWidth: '300px', margin: '16px' }}>
       <CardMedia
         component="img"
-        height="50%%"
-        image={item.store_item.image_path}
+        height="100%"
+        image={getOptimizedCardUrl(item.store_item.image_path)}
         alt={item.store_item.name}
         style={{ marginBottom: '16px' }}
       />
       <div style={{ padding: '16px' }}>
         <Typography variant="h6">{item.store_item.name}</Typography>
+        <Typography variant="body1" style={{ marginBottom: '8px' }}>{item.store_item.artist}</Typography>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px' }}>
           <CardActions>
             <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>

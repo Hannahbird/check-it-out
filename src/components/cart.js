@@ -24,7 +24,6 @@ function Cart() {
         setLoading(false);
       }
     };
-
     fetchCartItems();
   }, [cartUpdateStatus]);
 
@@ -55,41 +54,42 @@ function Cart() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Header title="Your Cart" buttonText="Continue Shopping" buttonAction={() => navigate('/all-items')} />
-      <Container style={{ flex: '1' }}>
-        <Grid container spacing={3}>
+    <Header title="Your Cart" buttonText="Continue Shopping" buttonAction={() => navigate('/all-items')}>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 64px)' }}>
+        <Container style={{ flex: '1' }}>
+          <Grid container spacing={2}>
+            {cartItems.map((item) => (
+              <Grid item key={item.id} xs={12} sm={6} md={4}>
+                <CartItem item={item} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+
+        <Container maxWidth="md" style={{ marginTop: '16px', padding: '16px', border: '1px solid #ccc', borderRadius: '8px' }}>
+          <Typography variant="h5" gutterBottom>Order Summary</Typography>
           {cartItems.map((item) => (
-            <Grid item key={item.id} xs={12} sm={6} md={4}>
-              <CartItem item={item} />
+            <Grid container key={item.id} justifyContent="space-between" style={{ marginBottom: '8px' }}>
+              <Typography>{item.store_item.name} - {item.store_item.artist}</Typography>
+              <Typography>${(item.store_item.price * item.quantity).toFixed(2)}</Typography>
             </Grid>
           ))}
-        </Grid>
-      </Container>
-
-      <Container maxWidth="md" style={{ marginTop: '16px', padding: '16px', border: '1px solid #ccc', borderRadius: '8px' }}>
-        <Typography variant="h5" gutterBottom>Order Summary</Typography>
-        {cartItems.map((item) => (
-          <Grid container key={item.id} justifyContent="space-between" style={{ marginBottom: '8px' }}>
-            <Typography>{item.store_item.name}</Typography>
-            <Typography>${(item.store_item.price * item.quantity).toFixed(2)}</Typography>
+          <Divider style={{ margin: '8px 0' }} />
+          <Grid container justifyContent="space-between" fontWeight="bold">
+            <Typography>Total Cost:</Typography>
+            <Typography>${calculateTotalCost().toFixed(2)}</Typography>
           </Grid>
-        ))}
+        </Container>
+
+        <Container maxWidth="sm" style={{ textAlign: 'center', marginTop: '16px' }}>
+          <Button onClick={handleUpdateCart} variant="contained" style={{ marginRight: '8px', background: '#4caf50', color: '#fff', borderRadius: '4px' }}>Update Cart</Button>
+          <Button onClick={handleEmptyCart} variant="contained" style={{ background: '#f50057', color: '#fff', borderRadius: '4px' }}>Empty Cart</Button>
+        </Container>
         <Divider style={{ margin: '8px 0' }} />
-        <Grid container justifyContent="space-between" fontWeight="bold">
-          <Typography>Total Cost:</Typography>
-          <Typography>${calculateTotalCost().toFixed(2)}</Typography>
-        </Grid>
-      </Container>
 
-      <Container maxWidth="sm" style={{ textAlign: 'center', marginTop: '16px' }}>
-        <Button onClick={handleUpdateCart} variant="contained" style={{ marginRight: '8px', background: '#4caf50', color: '#fff', borderRadius: '4px' }}>Update Cart</Button>
-        <Button onClick={handleEmptyCart} variant="contained" style={{ background: '#f50057', color: '#fff', borderRadius: '4px' }}>Empty Cart</Button>
-      </Container>
-      <Divider style={{ margin: '8px 0' }} />
-
-      <Footer style={{ flexShrink: 0 }} />
-    </div>
+        <Footer style={{ flexShrink: 0 }} />
+      </div>
+    </Header>
   );
 }
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Container, AppBar, Toolbar, Typography, Button, Grid, Card, CardMedia, Divider, CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Container, Typography, Button, Card, CardMedia, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import Footer from './footer';
 import Header from './header';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { getOptimizedCardUrl } from '../utils/cloudinaryUtils';
 
 function AllItems() {
   const [allItems, setAllItems] = useState([]);
@@ -22,7 +23,6 @@ function AllItems() {
         setLoading(false);
       }
     }
-
     fetchAllItems();
   }, []);
 
@@ -48,16 +48,14 @@ function AllItems() {
   };
 
   return (
-    <div>
-      <Header title="Discography" buttonText="Home" buttonAction={() => navigate('/')} />
-
+    <Header title="Discography" buttonText="Home" buttonAction={() => navigate('/')}>
       <main>
         {loading ? (
-          <Container maxWidth="md" style={{ marginTop: '20px', textAlign: 'center' }}>
+          <Container maxWidth="md" style={{ textAlign: 'center' }}>
             <CircularProgress />
           </Container>
         ) : (
-          <Container maxWidth="md" style={{ marginTop: '20px' }}>
+          <Container maxWidth="md">
             <div className="inventory">
               <section className="all-items-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '16px' }}>
                 {allItems.map((item) => (
@@ -65,11 +63,13 @@ function AllItems() {
                     <CardMedia
                       component="img"
                       height="100%"
-                      image={item.image_path}
+                      image={getOptimizedCardUrl(item.image_path)}
                       alt={item.name}
+                      loading="lazy"
                     />
                     <div style={{ padding: '16px' }}>
                       <Typography variant="body1" style={{ marginBottom: '8px' }}>{item.name}</Typography>
+                      <Typography variant="body1" style={{ marginBottom: '8px' }}>{item.artist}</Typography>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography variant="body2" color="textSecondary">
                           ${item.price}
@@ -90,11 +90,9 @@ function AllItems() {
             </div>
           </Container>
         )}
-      </main>
-      <footer>
         <Footer />
-      </footer>
-    </div>
+      </main>
+    </Header>
   );
 }
 

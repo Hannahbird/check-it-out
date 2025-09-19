@@ -6,7 +6,8 @@ import Footer from './components/footer';
 import Header from './components/header';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios';
-import ttpd from './images/assets/ttpd-banner.png';
+import store from './images/assets/vinyl-store.svg';
+import { getOptimizedCardUrl } from './utils/cloudinaryUtils';
 
 function App() {
   const [carouselItems, setCarouselItems] = useState([]);
@@ -57,10 +58,10 @@ function App() {
 
   return (
     <div maxWidth="md">
-      <Header title="Music Emporium" buttonText="Login" buttonAction={() => navigate('/test')} backgroundImage={ttpd} />
+      <Header title="Music Emporium" buttonText="Login" buttonAction={() => navigate('/test')} backgroundImage={store} />
       <Typography className="App-header" variant="h4" component="div" gutterBottom style={{ overflow: "hidden", maxHeight: "200px", position: "relative" }}>
         <div style={{ position: "absolute", top: "60%", left: "60%", transform: "translate(-60%, -60%)", width: "100%", height: "auto", maxWidth: "100%" }}>
-          <img src={ttpd} style={{ width: "100%", height: "auto", objectFit: "cover" }} alt="Hero Image" />
+          <img src={store} style={{ width: "100%", height: "auto", objectFit: "cover" }} alt="Hero Image" />
         </div>
       </Typography>
 
@@ -77,11 +78,13 @@ function App() {
                     <CardMedia
                       component="img"
                       height="100%" 
-                      image={item.image_path}
+                      image={getOptimizedCardUrl(item.image_path)}
                       alt={item.name}
+                      loading="lazy"
                     />
                     <div style={{ padding: '16px' }}>
                       <Typography variant="h6">{item.name}</Typography>
+                      <Typography variant="body1" style={{ marginBottom: '8px' }}>{item.artist}</Typography>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography variant="body2" color="textSecondary">
                           ${item.price}

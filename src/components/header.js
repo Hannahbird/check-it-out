@@ -89,7 +89,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Header({ title, buttonText, buttonAction, isCartEmpty, backgroundImage }) {
+// Create a context to share drawer state
+export const DrawerContext = React.createContext();
+
+export default function Header({ title, buttonText, buttonAction, isCartEmpty, backgroundImage, children }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -106,58 +109,78 @@ export default function Header({ title, buttonText, buttonAction, isCartEmpty, b
 
   if (isOnCartPage || isOnAllItemsPage) {
     return (
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <NavBar position="fixed" open={open} style={{backgroundColor: "grey"}}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: 5,
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              {title}
-            </Typography>
-          </Toolbar>
-        </NavBar>
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            <ListItem ButtonBase component={Link} to="/">
-              <ListItemIcon>
-                <CabinIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-            <ListItem ButtonBase component={Link} to="/cart">
-              <ListItemIcon>
-                <ShoppingCartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Cart" />
-            </ListItem>
-            <ListItem ButtonBase component={Link} to="/all-items">
-              <ListItemIcon>
-                <AlbumIcon />
-              </ListItemIcon>
-              <ListItemText primary="Discography" />
-            </ListItem>
-          </List>
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px' }}>
+      <DrawerContext.Provider value={{ open }}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <NavBar position="fixed" open={open} style={{backgroundColor: "grey"}}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: 5,
+                  ...(open && { display: 'none' }),
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                {title}
+              </Typography>
+            </Toolbar>
+          </NavBar>
+          <Drawer variant="permanent" open={open}>
+            <DrawerHeader>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              <ListItem button component={Link} to="/">
+                <ListItemIcon>
+                  <CabinIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItem>
+              <ListItem button component={Link} to="/cart">
+                <ListItemIcon>
+                  <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Cart" />
+              </ListItem>
+              <ListItem button component={Link} to="/all-items">
+                <ListItemIcon>
+                  <AlbumIcon />
+                </ListItemIcon>
+                <ListItemText primary="Discography" />
+              </ListItem>
+            </List>
+          </Drawer>
+          <Box 
+            component="main" 
+            sx={{ 
+              flexGrow: 1, 
+              p: 3, 
+              marginTop: '64px',
+              transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+              }),
+              ...(open && {
+                transition: theme.transitions.create('margin', {
+                  easing: theme.transitions.easing.easeOut,
+                  duration: theme.transitions.duration.enteringScreen,
+                }),
+              }),
+            }}
+          >
+            {children}
+          </Box>
         </Box>
-      </Box>
+      </DrawerContext.Provider>
     );
   } else {
     return (

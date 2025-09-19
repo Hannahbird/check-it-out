@@ -14,7 +14,7 @@ services:
     env_file: .env
     networks:
       - web
-      - loki
+      # - loki
 
   adminer:
     image: adminer
@@ -57,10 +57,10 @@ services:
       - "logging_jobname=applogs"
     networks:
       - web
-      - loki
+      # - loki
 
 networks:
   web:
     driver: bridge
-  loki:
-    external: true
+  # loki:
+  #   external: true
