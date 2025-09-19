@@ -10,6 +10,9 @@ const StoreItem = sequelize.define('store_items', {
   name: {
     type: Sequelize.STRING,
   },
+  artist: {
+    type: Sequelize.STRING,
+  },
   price: {
     type: Sequelize.DECIMAL,
   },

@@ -9,7 +9,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Footer from './footer';
 import Header from './header';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios';
 
 function Test() {
@@ -84,6 +83,7 @@ function Test() {
                                         <CardContent>
                                         <div style={{ padding: '16px' }}>
                                             <Typography variant="h6">{item.name}</Typography>
+                                            <Typography variant="body1" style={{ marginBottom: '8px' }}>{item.artist}</Typography>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             
                                                     <Typography variant="body2" color="textSecondary" component="p">

@@ -63,9 +63,9 @@ app.get('/store_items', async (req, res) => {
   try {
     const storeItems = await StoreItem.findAll();
     const detailedItems = await Promise.all(storeItems.map(async (item) => {
-      const { id, name, price, image_path } = item;
+      const { id, name, artist, price, image_path } = item;
       const additionalDetails = await fetchAdditionalDetailsWithAxios(id);
-      return { id, name, price, image_path, ...additionalDetails };
+      return { id, name, artist, price, image_path, ...additionalDetails };
     }));
     res.json(detailedItems);
   } catch (error) {
