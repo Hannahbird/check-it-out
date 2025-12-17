@@ -1,0 +1,31 @@
+name: check-it-out
+origin:
+  kind: path
+  path: .
+
+configuration:
+  instances: 1
+  routes:
+    - domain: ""
+  environment:
+    - name: NODE_ENV
+      value: production
+    - name: JWT_SECRET
+      value: ${JWT_SECRET}
+    - name: MYSQL_HOST
+      value: ${MYSQL_HOST}
+    - name: MYSQL_USER
+      value: ${MYSQL_USER}
+    - name: MYSQL_PASSWORD
+      value: ${MYSQL_PASSWORD}
+    - name: MYSQL_DATABASE
+      value: ${MYSQL_DATABASE}
+    - name: CLOUDINARY_CLOUD_NAME
+      value: ${CLOUDINARY_CLOUD_NAME}
+    - name: CLOUDINARY_API_KEY
+      value: ${CLOUDINARY_API_KEY}
+    - name: CLOUDINARY_API_SECRET
+      value: ${CLOUDINARY_API_SECRET}
+
+staging:
+  builder: paketobuildpacks/builder:base
