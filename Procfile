@@ -1,1 +1,1 @@
-web: npm run epinio:start
+web: npm run server
