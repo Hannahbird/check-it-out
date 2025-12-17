@@ -19,7 +19,7 @@ configuration:
     - name: MYSQL_USER
       value: ${MYSQL_USER}
     - name: MYSQL_PASSWORD
-      value: ${MYSQL_PASSWORD}
+      value: jdAUw4CF2m
     - name: MYSQL_DATABASE
       value: ${MYSQL_DATABASE}
     - name: CLOUDINARY_CLOUD_NAME
