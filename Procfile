@@ -1,1 +1,1 @@
-web: npm run server
+web: node debug-env.js && npm run build && npm run epinio:start
