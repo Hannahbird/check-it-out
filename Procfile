@@ -1,1 +1,1 @@
-web: npm run build && concurrently "npm start" "npm run server"
+web: npm run epinio:start
