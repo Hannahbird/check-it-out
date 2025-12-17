@@ -11,7 +11,7 @@ configuration:
     - name: NODE_ENV
       value: production
     - name: REACT_APP_API_URL
-      value: http://check-it-out.192.168.49.2.nip.io
+      value: https://check-it-out.192.168.49.2.nip.io
     - name: JWT_SECRET
       value: ${JWT_SECRET}
     - name: MYSQL_HOST
