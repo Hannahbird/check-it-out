@@ -1,0 +1,8 @@
+[build]
+[[build.env]]
+name = "REACT_APP_API_URL"
+value = "https://check-it-out.192.168.49.2.nip.io"
+
+[[build.env]]
+name = "NODE_ENV"
+value = "production"
