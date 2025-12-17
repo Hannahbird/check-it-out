@@ -5,6 +5,7 @@ import Header from './header';
 import Footer from './footer';
 import CartItem from './cartItem';
 import { Grid, Container, Button, Typography, Divider } from '@mui/material';
+import { getApiEndpoint } from '../config/api';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -15,7 +16,7 @@ function Cart() {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/cart');
+        const response = await axios.get(getApiEndpoint('/cart'));
         console.log('Response from /cart:', response.data);
         setCartItems(response.data);
       } catch (error) {
@@ -33,7 +34,7 @@ function Cart() {
 
   const handleEmptyCart = async () => {
     try {
-      await axios.delete('http://localhost:5000/clear-cart');
+      await axios.delete(getApiEndpoint('/clear-cart'));
       setCartItems([]);
     } catch (error) {
       console.error('Error clearing cart:', error);

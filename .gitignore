@@ -15,11 +15,15 @@ node_modules/
 
 # misc
 .DS_Store
-.env.local
+.env
 .env.development.local
 .env.test.local
 .env.production.local
 directory_tree.text
+
+# Keep environment templates
+!.env.local
+!.env.epinio
 
 
 npm-debug.log*

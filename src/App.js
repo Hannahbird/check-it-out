@@ -8,6 +8,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from 'axios';
 import store from './images/assets/vinyl-store.svg';
 import { getOptimizedCardUrl } from './utils/cloudinaryUtils';
+import { getApiEndpoint } from './config/api';
 
 function App() {
   const [carouselItems, setCarouselItems] = useState([]);
@@ -16,14 +17,14 @@ function App() {
 
   const addToCart = async (itemId) => {
     try {
-      const response = await fetch('http://localhost:5000/add-to-cart', {
+      const response = await fetch(getApiEndpoint('/add-to-cart'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ itemId, quantity: 1 }),
       });
-  
+
       if (response.ok) {
         const updatedCartItem = await response.json();
         console.log('Item added to the cart successfully:', updatedCartItem);
@@ -38,7 +39,7 @@ function App() {
   useEffect(() => {
     async function fetchStoreItems() {
       try {
-        const response = await axios.get('http://localhost:5000/store_items');
+        const response = await axios.get(getApiEndpoint('/store_items'));
         setCarouselItems(response.data);
       } catch (error) {
         console.error('Error fetching store items:', error);

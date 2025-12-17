@@ -5,13 +5,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import axios from 'axios';
 import { getOptimizedCardUrl } from '../utils/cloudinaryUtils';
+import { getApiEndpoint } from '../config/api';
 
 const CartItem = ({ item, updateCart, removeFromCart }) => {
   const [quantity, setQuantity] = useState(item.quantity);
 
   const handleQuantityChange = async (newQuantity) => {
     try {
-      const response = await axios.put(`http://localhost:5000/update-cart-item/${item.id}`, {
+      const response = await axios.put(getApiEndpoint(`/update-cart-item/${item.id}`), {
         quantity: newQuantity,
       });
 
@@ -27,7 +28,7 @@ const CartItem = ({ item, updateCart, removeFromCart }) => {
 
   const handleRemoveItem = async () => {
     try {
-      await axios.delete(`http://localhost:5000/remove-from-cart/${item.id}`);
+      await axios.delete(getApiEndpoint(`/remove-from-cart/${item.id}`));
       removeFromCart(item.id);
     } catch (error) {
       console.error('Error removing item:', error);

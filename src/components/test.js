@@ -10,6 +10,7 @@ import CardContent from "@mui/material/CardContent";
 import Footer from './footer';
 import Header from './header';
 import axios from 'axios';
+import { getApiEndpoint } from '../config/api';
 
 function Test() {
     const [carouselItems, setCarouselItems] = useState([]);
@@ -17,7 +18,7 @@ function Test() {
 
     const addToCart = async (itemId) => {
         try {
-            const response = await fetch('http://localhost:5000/add-to-cart', {
+            const response = await fetch(getApiEndpoint('/add-to-cart'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ function Test() {
     useEffect(() => {
         async function fetchStoreItems() {
             try {
-                const response = await axios.get('http://localhost:5000/store_items');
+                const response = await axios.get(getApiEndpoint('/store_items'));
                 setCarouselItems(response.data);
             } catch (error) {
                 console.error('Error fetching store items:', error);
